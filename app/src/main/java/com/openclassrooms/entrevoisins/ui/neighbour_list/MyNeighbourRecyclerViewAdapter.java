@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-
+/*
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,17 +57,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mViewDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Modidy getDefault
+                // TODO: complete to navigate to detail activity
                 EventBus.getDefault().post(new ViewNeighbourDetailsEvent(neighbour));
             }
         });
         holder.mAddToFavoritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Modify getDefault
+                // TODO: complete
                 EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(neighbour));
             }
         });
+
+ */
     }
 
     @Override
@@ -74,21 +77,38 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return mNeighbours.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.item_list_avatar)
         public ImageView mNeighbourAvatar;
         @BindView(R.id.item_list_name)
         public TextView mNeighbourName;
-        @BindView(R.id.item_list_delete_button)
-        public ImageButton mDeleteButton;
         @BindView(R.id.item_list_view_details_button)
         public ImageButton mViewDetailsButton;
         @BindView(R.id.item_list_add_to_favorites_button)
         public ImageButton mAddToFavoritesButton;
+        @BindView(R.id.item_list_delete_button)
+        public ImageButton mDeleteButton;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            mViewDetailsButton.setOnClickListener(this);
+            mAddToFavoritesButton.setOnClickListener(this);
+            mDeleteButton.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(view.equals(mViewDetailsButton)) {
+                Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
+                view.getContext().startActivity(intent);
+            } else if(view.equals(mAddToFavoritesButton)) {
+
+            } else if(view.equals(mDeleteButton)) {
+
+            }
         }
     }
+
 }

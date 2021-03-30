@@ -95,7 +95,7 @@ public class NeighbourFragment extends Fragment {
     }
 
     @Subscribe
-    public void onViewNeighbourDetailsPressed(ViewNeighbourDetailsEvent event) {
+    public void onViewNeighbourDetails(ViewNeighbourDetailsEvent event) {
         mApiService.getNeighbour(event.neighbour);
     }
 
