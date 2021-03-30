@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.ViewNeighbourDetailsEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -54,15 +56,15 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mViewDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Modidy
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                // TODO: Modidy getDefault
+                EventBus.getDefault().post(new ViewNeighbourDetailsEvent(neighbour));
             }
         });
         holder.mAddToFavoritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Modify
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                // TODO: Modify getDefault
+                EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(neighbour));
             }
         });
     }
