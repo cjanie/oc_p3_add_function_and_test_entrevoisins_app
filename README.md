@@ -1,3 +1,3 @@
 # OpenClassrooms
 
-Ce dépôt contient une mini-application pour le P3 du parcours **Grande École du Numérique**.
+At initial state, unit tests and instrumented tests succeed.
