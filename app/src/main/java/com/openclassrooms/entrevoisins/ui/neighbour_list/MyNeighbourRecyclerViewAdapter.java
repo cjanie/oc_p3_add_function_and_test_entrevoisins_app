@@ -51,6 +51,20 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
+        holder.mViewDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Modidy
+                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+            }
+        });
+        holder.mAddToFavoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Modify
+                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+            }
+        });
     }
 
     @Override
@@ -65,6 +79,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
+        @BindView(R.id.item_list_view_details_button)
+        public ImageButton mViewDetailsButton;
+        @BindView(R.id.item_list_add_to_favorites_button)
+        public ImageButton mAddToFavoritesButton;
 
         public ViewHolder(View view) {
             super(view);
