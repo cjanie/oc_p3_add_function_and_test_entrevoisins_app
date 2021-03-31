@@ -28,8 +28,6 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
-    Neighbour getNeighbourAtIndex(int index);
-
     Neighbour getNeighbourById(long id);
 
     void addNeighbourToFavorites(Neighbour neighbour);

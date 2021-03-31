@@ -39,7 +39,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
 
     public Neighbour getNeighbour(Neighbour neighbour) {
-        // unit test OK
+        // unit test OK TODO: remove method after writing unit test for getNeighbourgById(long id)
         Neighbour n = null;
         for(int i=0; i<this.neighbours.size(); i++) {
             if(this.neighbours.get(i).equals(neighbour)) {
@@ -51,11 +51,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return n;
     }
 
-    @Override
-    public Neighbour getNeighbourAtIndex(int index) {
-        // TODO
-        return this.neighbours.get(index);
-    }
+
 
     @Override
     public Neighbour getNeighbourById(long id) {
@@ -71,11 +67,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     @Override
     public void addNeighbourToFavorites(Neighbour neighbour) {
-        // TODO
+        // TODO: use a Favorites service
     }
 
     @Override
     public void removeNeighbourFromFavorites(Neighbour neighbour) {
-        // TODO
+        // TODO: use the Favorites service
     }
 }
