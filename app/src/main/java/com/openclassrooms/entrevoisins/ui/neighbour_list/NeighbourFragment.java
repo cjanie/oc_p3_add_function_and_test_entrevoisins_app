@@ -96,7 +96,7 @@ public class NeighbourFragment extends Fragment {
 
     @Subscribe
     public void onViewNeighbourDetails(ViewNeighbourDetailsEvent event) {
-        mApiService.getNeighbour(event.neighbour);
+        mApiService.getNeighbourById(event.neighbour.getId());
     }
 
     @Subscribe

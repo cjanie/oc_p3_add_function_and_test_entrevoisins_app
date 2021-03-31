@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,20 +48,14 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-/*
+
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
-        holder.mViewDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: complete to navigate to detail activity
-                EventBus.getDefault().post(new ViewNeighbourDetailsEvent(neighbour));
-            }
-        });
+
         holder.mAddToFavoritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,12 +64,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
- */
+        holder.setNeighbour(neighbour);
+
+
     }
 
     @Override
     public int getItemCount() {
         return mNeighbours.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return this.mNeighbours.get(position).getId();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -89,26 +91,34 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
 
+        private Neighbour neighbour;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
             mViewDetailsButton.setOnClickListener(this);
-            mAddToFavoritesButton.setOnClickListener(this);
-            mDeleteButton.setOnClickListener(this);
+        }
 
+        public Neighbour getNeighbour() {
+            return neighbour;
+        }
+
+        public void setNeighbour(Neighbour neighbour) {
+            this.neighbour = neighbour;
         }
 
         @Override
         public void onClick(View view) {
             if(view.equals(mViewDetailsButton)) {
                 Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
+                intent.putExtra("id", neighbour.getId());
                 view.getContext().startActivity(intent);
-            } else if(view.equals(mAddToFavoritesButton)) {
-
-            } else if(view.equals(mDeleteButton)) {
-
             }
         }
+
     }
+
+    // https://stackoverflow.com/questions/27559021/recyclerview-onlistitemclick-to-create-new-intent
+
 
 }

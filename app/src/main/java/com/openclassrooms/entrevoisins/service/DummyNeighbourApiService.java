@@ -37,7 +37,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         neighbours.add(neighbour);
     }
 
-    @Override
+
     public Neighbour getNeighbour(Neighbour neighbour) {
         // unit test OK
         Neighbour n = null;
@@ -49,6 +49,24 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         }
         System.out.println(n.getName());
         return n;
+    }
+
+    @Override
+    public Neighbour getNeighbourAtIndex(int index) {
+        // TODO
+        return this.neighbours.get(index);
+    }
+
+    @Override
+    public Neighbour getNeighbourById(long id) {
+        Neighbour neighbour = null;
+        for(int i=0; i<this.neighbours.size(); i++) {
+            if(this.neighbours.get(i).getId() == id) {
+                neighbour = this.neighbours.get(i);
+                break;
+            }
+        }
+        return neighbour;
     }
 
     @Override
