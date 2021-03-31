@@ -27,4 +27,10 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    Neighbour getNeighbourById(long id);
+
+    void addNeighbourToFavorites(Neighbour neighbour);
+
+    void removeNeighbourFromFavorites(Neighbour neighbour);
 }

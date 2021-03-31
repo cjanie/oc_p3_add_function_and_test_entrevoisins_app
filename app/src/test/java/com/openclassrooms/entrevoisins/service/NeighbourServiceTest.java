@@ -40,4 +40,11 @@ public class NeighbourServiceTest {
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
+
+    @Test
+    public void getNeighbourWithSuccess() {
+        Neighbour neighbourToGet = service.getNeighbours().get(0);
+        service.getNeighbour(neighbourToGet);
+        assert(service.getNeighbour(neighbourToGet).equals(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)));
+    }
 }
