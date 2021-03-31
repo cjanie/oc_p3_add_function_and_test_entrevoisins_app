@@ -10,10 +10,10 @@ public class FavoriteNeighbourService implements FavoriteService {
     private List<Neighbour> favorites;
 
     public FavoriteNeighbourService() {
-        this.resetService();
+        this.resetFavoriteService();
     }
     @Override
-    public void resetService() { // TODO: Test
+    public void resetFavoriteService() { // TODO: Test
         this.favorites = new ArrayList<>();
     }
 

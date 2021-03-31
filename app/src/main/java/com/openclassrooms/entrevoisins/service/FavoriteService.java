@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface FavoriteService {
-    void resetService();
+    void resetFavoriteService();
     void addToFavorites(Favorite favorite);
     void removeFromFavorites(Favorite favorite);
     List<Favorite> getFavorites();

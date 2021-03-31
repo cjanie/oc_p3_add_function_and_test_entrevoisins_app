@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.container)
     ViewPager mViewPager;
 
-    ListNeighbourPagerAdapter mPagerAdapter;
+    ListNeighbourPagerAdapter mPagerAdapter; // TODO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,16 @@ public class ListNeighbourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_neighbour);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
-        mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter); // TODO: Adapt according to the list of neighbourgs or to the list of favorites
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout)); // TODO
-        mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        setSupportActionBar(this.mToolbar);
+
+        // Neighbour List handling
+        this.mPagerAdapter = new ListNeighbourPagerAdapter(this.getSupportFragmentManager()); // TODO
+        // Container
+        this.mViewPager.setAdapter(this.mPagerAdapter); // TODO: Adapt according to the list of neighbourgs or to the list of favorites
+        // Tabs
+        this.mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.mTabLayout)); // TODO
+        this.mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.mViewPager)); // TODO
+        // Tabs have 2 TabItem
 
     }
 

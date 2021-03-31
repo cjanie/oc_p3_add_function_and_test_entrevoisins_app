@@ -73,15 +73,48 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return neighbour;
     }
 
-    @Override
+    // Methods to handle favorites
+
     public void addNeighbourToFavorites(Neighbour neighbour) {
-        this.favoriteNeighbourService.addToFavorites(neighbour);
-        System.out.println(this.favoriteNeighbourService.getFavorites().size());
+        this.addToFavorites(neighbour);
+    }
+
+    public void removeNeighbourFromFavorites(Neighbour neighbour) {
+        this.removeNeighbourFromFavorites(neighbour);
+    }
+
+    public List<Neighbour> getNeighbourFavorites() {
+        List<Neighbour> neighbourFavorites = new ArrayList<>();
+        List<Favorite> favorites = this.favoriteNeighbourService.getFavorites();
+        if(favorites.size() > 0) {
+            for(int i=0; i<favorites.size(); i++) {
+                if(favorites.get(i) instanceof Neighbour) {
+                    neighbourFavorites.add((Neighbour)favorites.get(i));
+                }
+            }
+        }
+        return neighbourFavorites;
     }
 
     @Override
-    public void removeNeighbourFromFavorites(Neighbour neighbour) {
-        this.favoriteNeighbourService.removeFromFavorites(neighbour);
-        System.out.println(this.favoriteNeighbourService.getFavorites().size());
+    public void resetFavoriteService() {
+        this.favoriteNeighbourService.resetFavoriteService();
+    }
+
+    @Override
+    public void addToFavorites(Favorite favorite) {
+        this.favoriteNeighbourService.addToFavorites(favorite);
+        System.out.println(this.favoriteNeighbourService.getFavorites().size()); // TODO test & remove
+    }
+
+    @Override
+    public void removeFromFavorites(Favorite favorite) {
+        this.favoriteNeighbourService.removeFromFavorites(favorite);
+        System.out.println(this.favoriteNeighbourService.getFavorites().size()); // TODO test & remove
+    }
+
+    @Override
+    public List<Favorite> getFavorites() {
+        return this.favoriteNeighbourService.getFavorites();
     }
 }
