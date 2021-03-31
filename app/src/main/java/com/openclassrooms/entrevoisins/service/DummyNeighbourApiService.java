@@ -12,11 +12,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours;
 
-    private List<Neighbour> favorites;
+    private FavoriteNeighbourService favoriteNeighbourService;
 
     public DummyNeighbourApiService() {
         this.neighbours = DummyNeighbourGenerator.generateNeighbours();
-        this.favorites = new ArrayList<>();
+        this.favoriteNeighbourService = new FavoriteNeighbourService();
     }
 
 
@@ -75,17 +75,13 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     @Override
     public void addNeighbourToFavorites(Neighbour neighbour) {
-        // TODO: use a Favorites service
-        if(!this.favorites.contains(neighbour)) {
-            this.favorites.add(neighbour);
-        }
+        this.favoriteNeighbourService.addToFavorites(neighbour);
+        System.out.println(this.favoriteNeighbourService.getFavorites().size());
     }
 
     @Override
     public void removeNeighbourFromFavorites(Neighbour neighbour) {
-        // TODO: use the Favorites service
-        if(this.favorites.contains(neighbour)) {
-            this.favorites.remove(neighbour);
-        }
+        this.favoriteNeighbourService.removeFromFavorites(neighbour);
+        System.out.println(this.favoriteNeighbourService.getFavorites().size());
     }
 }

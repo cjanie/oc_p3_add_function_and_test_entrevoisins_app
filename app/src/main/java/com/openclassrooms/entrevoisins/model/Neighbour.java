@@ -1,11 +1,13 @@
 package com.openclassrooms.entrevoisins.model;
 
+import com.openclassrooms.entrevoisins.service.Favorite;
+
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Favorite {
 
     /** Identifier */
     private long id;
