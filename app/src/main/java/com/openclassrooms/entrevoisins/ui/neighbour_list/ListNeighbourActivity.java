@@ -1,12 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
 
 import com.openclassrooms.entrevoisins.R;
 
@@ -17,31 +15,34 @@ import butterknife.OnClick;
 public class ListNeighbourActivity extends AppCompatActivity {
 
     // UI Components
-    @BindView(R.id.tabs)
-    TabLayout mTabLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.tabs)
+    TabLayout mTabLayout;
     @BindView(R.id.container)
     ViewPager mViewPager;
 
-    ListNeighbourPagerAdapter mPagerAdapter; // TODO
+    private ListNeighbourPagerAdapter mListPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_neighbour);
         ButterKnife.bind(this);
-
         setSupportActionBar(this.mToolbar);
 
-        // Neighbour List handling
-        this.mPagerAdapter = new ListNeighbourPagerAdapter(this.getSupportFragmentManager()); // TODO
-        // Container
-        this.mViewPager.setAdapter(this.mPagerAdapter); // TODO: Adapt according to the list of neighbourgs or to the list of favorites
-        // Tabs
-        this.mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.mTabLayout)); // TODO
-        this.mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.mViewPager)); // TODO
-        // Tabs have 2 TabItem
+        // List handling in the ViewPager container: neighbours or favorites controlled in ListPagerAdapter
+        this.mListPagerAdapter = new ListNeighbourPagerAdapter(this.getApplicationContext(), this.getSupportFragmentManager(), this.mTabLayout.getTabCount());
+        this.mViewPager.setAdapter(mListPagerAdapter);
+        this.mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.mTabLayout));
+        this.mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.mViewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
+
 
     }
 
