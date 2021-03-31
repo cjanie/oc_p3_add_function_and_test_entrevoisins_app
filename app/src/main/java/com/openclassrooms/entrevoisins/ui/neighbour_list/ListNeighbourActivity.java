@@ -33,8 +33,8 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mViewPager.setAdapter(mPagerAdapter); // TODO: Adapt according to the list of neighbourgs or to the list of favorites
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout)); // TODO
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
     }
