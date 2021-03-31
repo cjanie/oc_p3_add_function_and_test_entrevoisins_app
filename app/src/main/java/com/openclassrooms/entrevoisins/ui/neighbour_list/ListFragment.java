@@ -85,10 +85,12 @@ public abstract class ListFragment extends Fragment {
     @Subscribe
     public void onAddNeighbourToFavorites(AddNeighbourToFavoritesEvent event) {
         mApiService.addToFavorites(event.neighbour);
+        this.initList();
     }
 
     @Subscribe
     public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) {
         mApiService.removeFromFavorites(event.neighbour);
+        this.initList(); // TODO Test
     }
 }

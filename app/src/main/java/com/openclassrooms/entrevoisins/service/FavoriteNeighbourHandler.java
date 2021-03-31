@@ -5,20 +5,20 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteNeighbourService implements FavoriteService {
+public class FavoriteNeighbourHandler implements FavoriteHandler {
 
     private List<Neighbour> favorites;
 
-    public FavoriteNeighbourService() {
-        this.resetFavoriteService();
+    public FavoriteNeighbourHandler() {
+        this.resetFavoriteList();
     }
     @Override
-    public void resetFavoriteService() { // TODO: Test
+    public void resetFavoriteList() { // TODO: Test
         this.favorites = new ArrayList<>();
     }
 
     @Override
-    public void addToFavorites(Favorite favorite) { // TODO: Test
+    public void addToFavorites(Favorite favorite) {
         if(!this.favorites.contains(favorite)) {
             this.favorites.add((Neighbour) favorite);
         }

@@ -27,6 +27,6 @@ public class FavoriteFragment extends ListFragment {
             DummyNeighbourApiService dummyService = (DummyNeighbourApiService) this.mApiService;
             this.mFavorites = dummyService.getNeighbourFavorites();
         }
-        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavorites)); // TODO develop
+        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavorites));
     }
 }

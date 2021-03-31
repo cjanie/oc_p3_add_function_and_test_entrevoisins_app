@@ -23,7 +23,7 @@ public class NeighbourFragment extends ListFragment {
      */
     @Override
     protected void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        this.mNeighbours = this.mApiService.getNeighbours();
+        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(this.mNeighbours));
     }
 }

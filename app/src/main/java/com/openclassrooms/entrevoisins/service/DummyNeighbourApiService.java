@@ -12,11 +12,12 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours;
 
-    private FavoriteNeighbourService favoriteNeighbourService;
+    private FavoriteNeighbourHandler favoriteNeighbourHandler;
+
 
     public DummyNeighbourApiService() {
         this.neighbours = DummyNeighbourGenerator.generateNeighbours();
-        this.favoriteNeighbourService = new FavoriteNeighbourService();
+        this.favoriteNeighbourHandler = new FavoriteNeighbourHandler();
     }
 
 
@@ -34,6 +35,10 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void deleteNeighbour(Neighbour neighbour) {
         neighbours.remove(neighbour);
+        if(this.getFavorites().contains(neighbour)) {
+            this.removeFromFavorites(neighbour);
+        }
+
     }
 
     /**
@@ -44,21 +49,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
     }
-
-
-    public Neighbour getNeighbour(Neighbour neighbour) {
-        // unit test OK TODO: remove method after writing unit test for getNeighbourgById(long id)
-        Neighbour n = null;
-        for(int i=0; i<this.neighbours.size(); i++) {
-            if(this.neighbours.get(i).equals(neighbour)) {
-                n = this.neighbours.get(i);
-                break;
-            }
-        }
-        System.out.println(n.getName());
-        return n;
-    }
-
 
 
     @Override
@@ -85,7 +75,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     public List<Neighbour> getNeighbourFavorites() {
         List<Neighbour> neighbourFavorites = new ArrayList<>();
-        List<Favorite> favorites = this.favoriteNeighbourService.getFavorites();
+        List<Favorite> favorites = this.favoriteNeighbourHandler.getFavorites();
         if(favorites.size() > 0) {
             for(int i=0; i<favorites.size(); i++) {
                 if(favorites.get(i) instanceof Neighbour) {
@@ -97,24 +87,22 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     @Override
-    public void resetFavoriteService() {
-        this.favoriteNeighbourService.resetFavoriteService();
+    public void resetFavoriteList() {
+        this.favoriteNeighbourHandler.resetFavoriteList();
     }
 
     @Override
     public void addToFavorites(Favorite favorite) {
-        this.favoriteNeighbourService.addToFavorites(favorite);
-        System.out.println(this.favoriteNeighbourService.getFavorites().size()); // TODO test & remove
+        this.favoriteNeighbourHandler.addToFavorites(favorite);
     }
 
     @Override
     public void removeFromFavorites(Favorite favorite) {
-        this.favoriteNeighbourService.removeFromFavorites(favorite);
-        System.out.println(this.favoriteNeighbourService.getFavorites().size()); // TODO test & remove
+        this.favoriteNeighbourHandler.removeFromFavorites(favorite);
     }
 
     @Override
     public List<Favorite> getFavorites() {
-        return this.favoriteNeighbourService.getFavorites();
+        return this.favoriteNeighbourHandler.getFavorites();
     }
 }

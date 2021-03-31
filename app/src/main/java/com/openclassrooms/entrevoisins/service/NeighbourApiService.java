@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Neighbour API client
  */
-public interface NeighbourApiService extends FavoriteService {
+public interface NeighbourApiService extends FavoriteHandler {
 
     /**
      * Get all my Neighbours
