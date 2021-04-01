@@ -1,13 +1,8 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 
-import java.util.List;
-
-public class FavoriteFragment extends ListFragment {
-
-    private List<Neighbour> mFavorites;
+public class FavoriteFragment extends NeighboursListFragment {
 
     /**
      * Create and return a new instance
@@ -19,15 +14,14 @@ public class FavoriteFragment extends ListFragment {
     }
 
     /**
-     * Init the List of favorites
-     * GET from ApiService
+     * Instantiate the list of favorites from API
+     * Link the list to the view using adapter
      */
     @Override
     protected void initList() {
         if(this.mApiService instanceof DummyNeighbourApiService) {
             DummyNeighbourApiService dummyService = (DummyNeighbourApiService) this.mApiService;
-            this.mFavorites = dummyService.getNeighbourFavorites();
+            this.list = dummyService.getNeighbourFavorites();
         }
-        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavorites));
     }
 }

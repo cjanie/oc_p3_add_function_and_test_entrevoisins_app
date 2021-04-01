@@ -1,13 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import com.openclassrooms.entrevoisins.model.Neighbour;
 
-import java.util.List;
-
-
-public class NeighbourFragment extends ListFragment {
-
-    private List<Neighbour> mNeighbours;
+public class NeighbourFragment extends NeighboursListFragment {
 
     /**
      * Create and return a new instance
@@ -19,11 +13,10 @@ public class NeighbourFragment extends ListFragment {
     }
 
     /**
-     * Init the List of neighbours
+     * Instantiate the list of neighbours from api
      */
     @Override
     protected void initList() {
-        this.mNeighbours = this.mApiService.getNeighbours();
-        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(this.mNeighbours));
+        this.list = this.mApiService.getNeighbours();
     }
 }

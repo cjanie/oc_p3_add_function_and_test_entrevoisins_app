@@ -15,6 +15,7 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,8 +23,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-public abstract class ListFragment extends Fragment {
+public abstract class NeighboursListFragment extends Fragment {
 
+    protected List<Neighbour> list;
     protected NeighbourApiService mApiService;
     protected RecyclerView mRecyclerView;
 
@@ -45,12 +47,27 @@ public abstract class ListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * initList
+     * Abstract method to instantiate the list, getting the related list from API
+     */
     protected abstract void initList();
+
+    /**
+     * initListView
+     * Method to link the list to the view
+     * Called in onResume
+     * Also called to refresh the view after events have affected the API
+     */
+    private void initListView() {
+        this.initList(); // instantiate the list
+        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(this.list));
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        this.initList();
+        this.initListView();
     }
 
     @Override
@@ -72,18 +89,18 @@ public abstract class ListFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
-        initList();
+        initListView(); // to refresh the view after deleting
     }
 
     @Subscribe
     public void onAddNeighbourToFavorites(AddNeighbourToFavoritesEvent event) {
         mApiService.addToFavorites(event.neighbour);
-        this.initList();
+        this.initListView(); // to refresh the view after adding
     }
 
     @Subscribe
     public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) { // TODO Test
         mApiService.removeFromFavorites(event.neighbour);
-        this.initList();
+        this.initListView(); // to refresh the view after removing
     }
 }
