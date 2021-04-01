@@ -31,7 +31,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(this.mToolbar);
 
-        // List handling in the ViewPager container: neighbours or favorites controlled in ListPagerAdapter
+        // List handling in the ViewPager container: neighbours or favorites controlled in ListNeighbourPagerAdapter
         this.mListPagerAdapter = new ListNeighbourPagerAdapter(this.getApplicationContext(), this.getSupportFragmentManager(), this.mTabLayout.getTabCount());
         this.mViewPager.setAdapter(mListPagerAdapter);
         this.mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.mTabLayout));

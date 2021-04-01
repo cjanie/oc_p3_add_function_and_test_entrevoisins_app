@@ -23,16 +23,16 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-public abstract class NeighboursListFragment extends Fragment {
+public abstract class ListNeighbourFragment extends Fragment {
 
     protected List<Neighbour> list;
-    protected NeighbourApiService mApiService;
-    protected RecyclerView mRecyclerView;
+    protected NeighbourApiService neighbourApiService;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApiService = DI.getNeighbourApiService();
+        neighbourApiService = DI.getNeighbourApiService();
     }
 
 
@@ -41,9 +41,9 @@ public abstract class NeighboursListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
-        mRecyclerView = (RecyclerView) view;
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView = (RecyclerView) view;
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 
@@ -58,10 +58,11 @@ public abstract class NeighboursListFragment extends Fragment {
      * Method to link the list to the view
      * Called in onResume
      * Also called to refresh the view after events have affected the API
+     *
      */
     private void initListView() {
         this.initList(); // instantiate the list
-        this.mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(this.list));
+        this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
     }
 
     @Override
@@ -88,19 +89,19 @@ public abstract class NeighboursListFragment extends Fragment {
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        mApiService.deleteNeighbour(event.neighbour);
+        neighbourApiService.deleteNeighbour(event.neighbour);
         initListView(); // to refresh the view after deleting
     }
 
     @Subscribe
     public void onAddNeighbourToFavorites(AddNeighbourToFavoritesEvent event) {
-        mApiService.addToFavorites(event.neighbour);
+        neighbourApiService.addToFavorites(event.neighbour);
         this.initListView(); // to refresh the view after adding
     }
 
     @Subscribe
     public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) { // TODO Test
-        mApiService.removeFromFavorites(event.neighbour);
+        neighbourApiService.removeFromFavorites(event.neighbour);
         this.initListView(); // to refresh the view after removing
     }
 }

@@ -1,7 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 
-public class NeighbourFragment extends NeighboursListFragment {
+public class NeighbourFragment extends ListNeighbourFragment {
 
     /**
      * Create and return a new instance
@@ -17,6 +17,6 @@ public class NeighbourFragment extends NeighboursListFragment {
      */
     @Override
     protected void initList() {
-        this.list = this.mApiService.getNeighbours();
+        this.list = this.neighbourApiService.getNeighbours();
     }
 }

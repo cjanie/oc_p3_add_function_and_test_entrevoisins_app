@@ -2,7 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 
-public class FavoriteFragment extends NeighboursListFragment {
+public class FavoriteFragment extends ListNeighbourFragment {
 
     /**
      * Create and return a new instance
@@ -19,8 +19,8 @@ public class FavoriteFragment extends NeighboursListFragment {
      */
     @Override
     protected void initList() {
-        if(this.mApiService instanceof DummyNeighbourApiService) {
-            DummyNeighbourApiService dummyService = (DummyNeighbourApiService) this.mApiService;
+        if(this.neighbourApiService instanceof DummyNeighbourApiService) {
+            DummyNeighbourApiService dummyService = (DummyNeighbourApiService) this.neighbourApiService;
             this.list = dummyService.getNeighbourFavorites();
         }
     }
