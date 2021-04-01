@@ -20,6 +20,7 @@ public class FavoriteFragment extends ListFragment {
 
     /**
      * Init the List of favorites
+     * GET from ApiService
      */
     @Override
     protected void initList() {
