@@ -15,8 +15,6 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
-import com.openclassrooms.entrevoisins.events.ViewNeighbourDetailsEvent;
-import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,19 +76,14 @@ public abstract class ListFragment extends Fragment {
     }
 
     @Subscribe
-    public void onViewNeighbourDetails(ViewNeighbourDetailsEvent event) {
-        mApiService.getNeighbourById(event.neighbour.getId());
-    }
-
-    @Subscribe
     public void onAddNeighbourToFavorites(AddNeighbourToFavoritesEvent event) {
         mApiService.addToFavorites(event.neighbour);
         this.initList();
     }
 
     @Subscribe
-    public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) {
+    public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) { // TODO Test
         mApiService.removeFromFavorites(event.neighbour);
-        this.initList(); // TODO Test
+        this.initList();
     }
 }

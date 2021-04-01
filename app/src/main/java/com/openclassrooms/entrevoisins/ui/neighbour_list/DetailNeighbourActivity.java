@@ -29,21 +29,27 @@ public class DetailNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this); // way to instanciate the binded views
 
         this.mApiService = DI.getNeighbourApiService(); // way to instanciate the api service
-        this.loadData();
+        this.initData();
+
+    }
+
+    /**
+     * Get data from api
+     * Set it into the view
+     */
+    private void initData() {
+        // Get data
+        if(this.getIntent() != null) {
+            long id = this.getIntent().getLongExtra("id", 0); //TODO: Unit Test and Instrumented Test
+            if( id > 0) {
+                this.neighbour = mApiService.getNeighbourById(id);
+            }
+        }
+        // Set data into the view
         if(this.neighbour != null) {
             this.neighbourName.setText(this.neighbour.getName());
         }
     }
 
-    private void loadData() {
 
-        if(this.getIntent() != null) {
-            long id = this.getIntent().getLongExtra("id", 5); //TODO: Modify
-            if( id > 0) {
-                this.neighbour = mApiService.getNeighbourById(id);
-            }
-
-        }
-
-    }
 }

@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.ViewNeighbourDetailsEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -59,7 +58,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mAddToFavoritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: complete
                 EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(neighbour));
             }
         });
@@ -99,10 +97,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             mViewDetailsButton.setOnClickListener(this);
         }
 
-        public Neighbour getNeighbour() {
-            return neighbour;
-        }
-
         public void setNeighbour(Neighbour neighbour) {
             this.neighbour = neighbour;
         }
@@ -111,7 +105,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public void onClick(View view) {
             if(view.equals(mViewDetailsButton)) {
                 Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
-                intent.putExtra("id", neighbour.getId());
+                intent.putExtra("id", this.neighbour.getId());
                 view.getContext().startActivity(intent);
             }
         }

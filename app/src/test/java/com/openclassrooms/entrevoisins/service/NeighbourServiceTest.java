@@ -42,9 +42,9 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void getNeighbourWithSuccess() {
+    public void getNeighbourByIdWithSuccess() {
         Neighbour neighbourToGet = service.getNeighbours().get(0);
-        service.getNeighbour(neighbourToGet);
-        assert(service.getNeighbour(neighbourToGet).equals(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)));
+        service.getNeighbourById(neighbourToGet.getId());
+        assert(service.getNeighbourById(neighbourToGet.getId()).equals(neighbourToGet));
     }
 }
