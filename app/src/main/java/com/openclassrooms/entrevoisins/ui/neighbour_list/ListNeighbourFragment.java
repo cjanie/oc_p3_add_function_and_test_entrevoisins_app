@@ -27,7 +27,7 @@ public abstract class ListNeighbourFragment extends Fragment {
 
     protected List<Neighbour> list;
     protected NeighbourApiService neighbourApiService;
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,16 +36,7 @@ public abstract class ListNeighbourFragment extends Fragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
-        Context context = view.getContext();
-        recyclerView = (RecyclerView) view;
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        return view;
-    }
+
 
     /**
      * initList

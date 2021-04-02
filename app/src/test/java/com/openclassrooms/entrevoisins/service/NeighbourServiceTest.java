@@ -10,7 +10,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -32,7 +35,7 @@ public class NeighbourServiceTest {
     @Test
     public void getNeighboursWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
-        List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+        List<Neighbour> expectedNeighbours = DUMMY_NEIGHBOURS;
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
@@ -62,12 +65,17 @@ public class NeighbourServiceTest {
         service.addToFavorites(neighbour);
         favorites = service.getFavorites();
         assert(favorites.contains(neighbour));
-        assert(favorites.size() == 1);
+        assertEquals(1, favorites.size());
 
         // If neighbour is already in the list of favorites, it has not be added again
         service.addToFavorites(neighbour);
         favorites = service.getFavorites();
-        assert(favorites.size() == 1);
+        assertEquals(1, favorites.size());
+
+        // Check data of added favorite
+        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getAvatarUrl).collect(Collectors.toList()).contains(neighbour.getAvatarUrl()));
+        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getId).collect(Collectors.toList()).contains(neighbour.getId()));
+        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getName).collect(Collectors.toList()).contains(neighbour.getName()));
 
         // Test remove from favorites
         service.removeFromFavorites(neighbour);
