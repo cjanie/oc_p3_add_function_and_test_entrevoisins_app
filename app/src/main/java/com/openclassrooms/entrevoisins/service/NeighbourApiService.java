@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Neighbour API client
  */
-public interface NeighbourApiService extends FavoriteHandler {
+public interface NeighbourApiService {
 
     /**
      * Get all my Neighbours
@@ -28,10 +28,29 @@ public interface NeighbourApiService extends FavoriteHandler {
      */
     void createNeighbour(Neighbour neighbour);
 
+    /**
+     * Get a neighbour by id
+     * @param id
+     * @return
+     */
     Neighbour getNeighbourById(long id);
 
-    // TODO remove void addNeighbourToFavorites(Neighbour neighbour);
+    /**
+     * Add a neighbour to the favorites
+     * @param neighbour
+     */
+    void addToFavorites(Neighbour neighbour);
 
-    // TODO remove void removeNeighbourFromFavorites(Neighbour neighbour);
+    /**
+     * Remove a neighbour from the favorites
+     * @param neighbour
+     */
+    void removeFromFavorites(Neighbour neighbour);
+
+    /**
+     * Get the favorites of neighbours
+     * @return
+     */
+    List<Neighbour> getFavorites();
 
 }

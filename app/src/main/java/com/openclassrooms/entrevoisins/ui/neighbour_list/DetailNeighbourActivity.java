@@ -1,6 +1,5 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,9 @@ import butterknife.ButterKnife;
 
 public class DetailNeighbourActivity extends AppCompatActivity {
 
-    private NeighbourApiService mApiService;
     private Neighbour neighbour;
+    private NeighbourApiService neighbourApiService;
+
 
     @BindView(R.id.detail_neighbour_name)
     TextView neighbourName;
@@ -28,24 +28,29 @@ public class DetailNeighbourActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_detail_neighbour);
         ButterKnife.bind(this); // way to instanciate the binded views
 
-        this.mApiService = DI.getNeighbourApiService(); // way to instanciate the api service
-        this.initData();
+        this.neighbourApiService = DI.getNeighbourApiService(); // way to instanciate the api service
+        this.initDataView();
 
     }
 
     /**
      * Get data from api
-     * Set it into the view
+     *
      */
     private void initData() {
-        // Get data
         if(this.getIntent() != null) {
             long id = this.getIntent().getLongExtra("id", 0); //TODO: Unit Test and Instrumented Test
             if( id > 0) {
-                this.neighbour = mApiService.getNeighbourById(id);
+                this.neighbour = neighbourApiService.getNeighbourById(id);
             }
         }
-        // Set data into the view
+    }
+
+    /**
+     * Set data into the view
+     */
+    private void initDataView() {
+        this.initData();
         if(this.neighbour != null) {
             this.neighbourName.setText(this.neighbour.getName());
         }

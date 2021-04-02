@@ -22,7 +22,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.container)
     ViewPager mViewPager;
 
-    private ListNeighbourPagerAdapter mListPagerAdapter;
+    private ListNeighbourPagerAdapter listNeighbourPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class ListNeighbourActivity extends AppCompatActivity {
         setSupportActionBar(this.mToolbar);
 
         // List handling in the ViewPager container: neighbours or favorites controlled in ListNeighbourPagerAdapter
-        this.mListPagerAdapter = new ListNeighbourPagerAdapter(this.getApplicationContext(), this.getSupportFragmentManager(), this.mTabLayout.getTabCount());
-        this.mViewPager.setAdapter(mListPagerAdapter);
+        this.listNeighbourPagerAdapter = new ListNeighbourPagerAdapter(this.getApplicationContext(), this.getSupportFragmentManager(), this.mTabLayout.getTabCount());
+        this.mViewPager.setAdapter(listNeighbourPagerAdapter);
         this.mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.mTabLayout));
         this.mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.mViewPager) {
             @Override

@@ -51,6 +51,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Neighbour getNeighbourById(long id) {
         Neighbour neighbour = null;
@@ -65,44 +70,37 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     // Methods to handle favorites
 
-    public void addNeighbourToFavorites(Neighbour neighbour) {
-        this.addToFavorites(neighbour);
+
+    /**
+     *
+     * @param neighbour
+     */
+    @Override
+    public void addToFavorites(Neighbour neighbour) {
+        this.favoriteNeighbourHandler.addToFavorites(neighbour);
     }
 
-    public void removeNeighbourFromFavorites(Neighbour neighbour) {
-        this.removeNeighbourFromFavorites(neighbour);
+    /**
+     *
+     * @param neighbour
+     */
+    @Override
+    public void removeFromFavorites(Neighbour neighbour) {
+        this.favoriteNeighbourHandler.removeFromFavorites(neighbour);
     }
 
-    public List<Neighbour> getNeighbourFavorites() {
-        List<Neighbour> neighbourFavorites = new ArrayList<>();
-        List<Favorite> favorites = this.favoriteNeighbourHandler.getFavorites();
-        if(favorites.size() > 0) {
-            for(int i=0; i<favorites.size(); i++) {
-                if(favorites.get(i) instanceof Neighbour) {
-                    neighbourFavorites.add((Neighbour)favorites.get(i));
-                }
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<Neighbour> getFavorites() {
+        List<Neighbour> favorites = new ArrayList<>();
+        for(int i=0; i<this.favoriteNeighbourHandler.getFavorites().size(); i++) {
+            if(this.favoriteNeighbourHandler.getFavorites().get(i) instanceof Neighbour) {
+                favorites.add((Neighbour) this.favoriteNeighbourHandler.getFavorites().get(i));
             }
         }
-        return neighbourFavorites;
-    }
-
-    @Override
-    public void resetFavoriteList() {
-        this.favoriteNeighbourHandler.resetFavoriteList();
-    }
-
-    @Override
-    public void addToFavorites(Favorite favorite) {
-        this.favoriteNeighbourHandler.addToFavorites(favorite);
-    }
-
-    @Override
-    public void removeFromFavorites(Favorite favorite) {
-        this.favoriteNeighbourHandler.removeFromFavorites(favorite);
-    }
-
-    @Override
-    public List<Favorite> getFavorites() {
-        return this.favoriteNeighbourHandler.getFavorites();
+        return favorites;
     }
 }
