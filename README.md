@@ -1,6 +1,7 @@
-At initial state, unit tests and instrumented tests succeed.
+---- Add a functionality ----
 
-Add a functionality: users would like to see the detail of users and to add users to their favorites.
+At initial state, unit tests and instrumented tests succeed.
+Users would like to see the detail of the other users and to add other users to their favorites.
 # Issue 1: to make a new page to see the detail of a user
 # Issue 2: to handle favorites
 
@@ -26,7 +27,8 @@ Architecture CQRS to use API: GET for query from API / EventBus for command to A
 - to command to API pressing a button sending a related event by EventBus
 
 EventBus pattern
-The Fragment subscribe to receive the events sent by EventBus when the buttons are pressed.
+The Fragment subscribe to receive events sent by EventBus when buttons are pressed.
+Events transport data to the fragment for API command execution.
 At the receipt of an event, the fragment makes API execute the corresponding command.
 - the receipt of the DeleteEvent by the fragment involves API to execute the delete command
 - the receipt of the AddToFavoritesEvent by the fragment involves API to execute the add to favorites command
