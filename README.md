@@ -1,27 +1,37 @@
-# OpenClassrooms
+---- Add a functionality ----
 
 At initial state, unit tests and instrumented tests succeed.
-
-Add a functionality: users would like to have the possibility to print details of other users, and to add to their favorites.
-# Issue 1: view users details
-# Issue 2: add to favorites
-# Issue 3: write tests and test
-# Issue 4: write info for developers in the README.md file
-
+Users would like to see the detail of the other users and to add other users to their favorites.
+# Issue 1: to make a new page to see the detail of a user
+# Issue 2: to handle favorites
 
 ---- Technical info for developers ----
 
 # UX
-As a community user i can get the list of the other community users (initial state)
-As a community user i can remove a community user from the list (initial state)
-As a community user i can add a community user to the list (initial state)
-As a community user i can get the details of a community user of the list (TODO)
-As a community user i can add community users to my favorites (TODO)
+Initial state:
+- As a user I can get the list of the users
+- As a user I can delete a user
+- As a user I can add a user
+Issues:
+- As a user I can get the detail of a user on a new page
+- As a user I can add users to my favorites
 
 # Technical Specifications
-On the 'MainActivity', each user avatar of the list has an associated 'delete' button.
-Let's add a 'view details' button and an 'add to favorites' button.
-Use the data of the user avatar to implement methods:
-- onClickViewDetails method to navigate to a new page 'UserDetailsActivity' pressing the 'view details' button.
-- the method onClickAddToFavorites should also be called pressing a button in 'UserDetailActivity'.
-Activities should use a dedicated service to handle favorites.
+In ListFragment each Item is associated to a 'delete' button. Added: 'view detail' and 'add to favorites' buttons.
+Buttons are implemented in RecyclerView:
+- on click 'view detail' button to navigate to the 'detail' page
+- on click 'add to favorites button' to send an event by EventBus such as the 'delete' button does
+
+Architecture CQRS to use API: GET for query from API / EventBus for command to API
+- GET to initialize data in UI: get list in ListFragment / get item by id in DetailActivity
+- to command to API pressing a button sending a related event by EventBus
+
+EventBus pattern
+The Fragment subscribe to receive events sent by EventBus when buttons are pressed.
+Events transport data to the fragment for API command execution.
+At the receipt of an event, the fragment makes API execute the corresponding command.
+- the receipt of the DeleteEvent by the fragment involves API to execute the delete command
+- the receipt of the AddToFavoritesEvent by the fragment involves API to execute the add to favorites command
+
+# Architecture and pattern Scheme
+https://docs.google.com/presentation/d/1G5H_qggvZ4L6qLUZY3EXCFsJihgFf7dhPeA3GcwhN2M/edit#slide=id.gce3d97d3eb_0_82

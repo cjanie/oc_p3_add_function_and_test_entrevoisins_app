@@ -12,8 +12,12 @@ public class FavoriteNeighbourHandler implements FavoriteHandler {
     public FavoriteNeighbourHandler() {
         this.resetFavoriteList();
     }
+
+    /**
+     * Method to instantiate the list
+     */
     @Override
-    public void resetFavoriteList() { // TODO: Test
+    public void resetFavoriteList() {
         this.favorites = new ArrayList<>();
     }
 
@@ -25,14 +29,14 @@ public class FavoriteNeighbourHandler implements FavoriteHandler {
     }
 
     @Override
-    public void removeFromFavorites(Favorite favorite) { // TODO: Test
+    public void removeFromFavorites(Favorite favorite) {
         if(this.favorites.contains(favorite)) {
             this.favorites.remove(favorite);
         }
     }
 
     @Override
-    public List<Favorite> getFavorites() { // TODO: Test
+    public List<Favorite> getFavorites() {
         return new ArrayList<Favorite>(this.favorites);
     }
 }

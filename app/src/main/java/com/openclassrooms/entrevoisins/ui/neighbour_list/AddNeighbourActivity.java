@@ -38,7 +38,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.create)
     MaterialButton addButton;
 
-    private NeighbourApiService mApiService;
+    private NeighbourApiService neighbourApiService;
     private String mNeighbourImage;
 
     @Override
@@ -47,7 +47,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_neighbour);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mApiService = DI.getNeighbourApiService();
+        neighbourApiService = DI.getNeighbourApiService();
         init();
     }
 
@@ -89,7 +89,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 phoneInput.getEditText().getText().toString(),
                 aboutMeInput.getEditText().getText().toString()
         );
-        mApiService.createNeighbour(neighbour);
+        neighbourApiService.createNeighbour(neighbour);
         finish();
     }
 
