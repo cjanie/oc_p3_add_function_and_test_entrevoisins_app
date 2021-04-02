@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,6 +62,13 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
             }
         });
 
+        holder.removeFromFavoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(neighbour));
+            }
+        });
+
         holder.setNeighbour(neighbour);
     }
 
@@ -88,11 +96,17 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageButton deleteButton;
         @BindView(R.id.item_list_add_to_favorites_button)
         public ImageButton addToFavoritesButton;
+        @BindView(R.id.item_list_remove_from_favorites_button)
+        public ImageButton removeFromFavoritesButton;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            viewDetailButton.setOnClickListener(this);
+            this.viewDetailButton.setOnClickListener(this);
+        }
+
+        private void toggleFavorites() {
+            // TODO in RecyclerView adapter
         }
 
         private void setNeighbour(Neighbour neighbour) {
