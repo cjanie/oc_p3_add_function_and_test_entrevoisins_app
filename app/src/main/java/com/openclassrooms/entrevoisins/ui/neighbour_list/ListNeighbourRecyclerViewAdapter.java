@@ -5,17 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
+import com.openclassrooms.entrevoisins.events.ToggleFavoritesEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,27 +54,6 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.neighbourAvatar);
 
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-            }
-        });
-
-        holder.addToFavoritesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(neighbour));
-            }
-        });
-
-        holder.removeFromFavoritesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(neighbour));
-            }
-        });
-
         holder.setNeighbour(neighbour);
     }
 
@@ -84,6 +69,11 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        /**
+         * One neighbour from the list of the recycler view adapter
+         * Neighbour is set from the recycler view adapter
+         * Neighbour data is needed to implement all click actions on this neighbour
+         */
         private Neighbour neighbour;
 
         @BindView(R.id.item_list_avatar)
@@ -98,17 +88,28 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageButton addToFavoritesButton;
         @BindView(R.id.item_list_remove_from_favorites_button)
         public ImageButton removeFromFavoritesButton;
+        @BindView(R.id.item_list_toggle_favorites_button)
+        public ImageButton toggleFavoritesButton;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
+            ButterKnife.bind(this, view); // to instantiate the views
             this.viewDetailButton.setOnClickListener(this);
+            this.deleteButton.setOnClickListener(this);
+            this.toggleFavoritesButton.setOnClickListener(this);
+            this.addToFavoritesButton.setOnClickListener(this);
+            this.removeFromFavoritesButton.setOnClickListener(this);
+
         }
 
-        private void toggleFavorites() {
-            // TODO in RecyclerView adapter
+        private void toggleFavoritesSelection() { //TODO
+            this.toggleFavoritesButton.setActivated(!this.toggleFavoritesButton.isActivated());
         }
 
+        /**
+         * Setter for neighbour
+         * @param neighbour
+         */
         private void setNeighbour(Neighbour neighbour) {
             this.neighbour = neighbour;
         }
@@ -119,7 +120,14 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
                 intent.putExtra("id", this.neighbour.getId());
                 view.getContext().startActivity(intent);
-
+            } else if(view.equals(this.deleteButton)) {
+                EventBus.getDefault().post(new DeleteNeighbourEvent(this.neighbour));
+            } else if(view.equals(this.toggleFavoritesButton)) {
+                // TODO
+            } else if(view.equals((this.addToFavoritesButton))) {
+                EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
+            } else if(view.equals(this.removeFromFavoritesButton)) {
+                EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
             }
         }
 

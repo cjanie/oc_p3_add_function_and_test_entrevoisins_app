@@ -81,7 +81,7 @@ public abstract class ListNeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         neighbourApiService.deleteNeighbour(event.neighbour);
-        initListView(); // to refresh the view after deleting
+        this.initListView(); // to refresh the view after deleting
     }
 
     @Subscribe
