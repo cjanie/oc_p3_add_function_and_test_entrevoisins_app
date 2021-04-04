@@ -46,6 +46,6 @@ public class FavoriteFragment extends ListNeighbourFragment {
     @Override
     protected void initListView() {
         this.initList(); // instantiate the list
-        this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
+        this.recyclerView.setAdapter(new ListFavoriteRecyclerViewAdapter(this.list));
     }
 }

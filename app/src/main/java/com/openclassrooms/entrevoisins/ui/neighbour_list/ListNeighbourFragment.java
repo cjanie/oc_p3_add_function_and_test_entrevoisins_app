@@ -36,9 +36,6 @@ public abstract class ListNeighbourFragment extends Fragment {
         neighbourApiService = DI.getNeighbourApiService();
     }
 
-
-
-
     /**
      * initList
      * Abstract method to instantiate the list, getting the related list from API

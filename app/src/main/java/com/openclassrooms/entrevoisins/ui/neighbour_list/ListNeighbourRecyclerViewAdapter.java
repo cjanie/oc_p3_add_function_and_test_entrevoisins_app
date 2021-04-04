@@ -1,20 +1,14 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -22,7 +16,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
-import com.openclassrooms.entrevoisins.events.ToggleFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,8 +29,8 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
 
     private final List<Neighbour> neighbours;
 
-    public ListNeighbourRecyclerViewAdapter(List<Neighbour> items) {
-        this.neighbours = items;
+    public ListNeighbourRecyclerViewAdapter(List<Neighbour> neighbours) {
+        this.neighbours = neighbours;
     }
 
 
@@ -45,7 +38,7 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_neighbour, parent, false); // TODO fragment_favorite
+                .inflate(R.layout.fragment_neighbour_list_item, parent, false); // TODO fragment_favorite
         return new ListNeighbourRecyclerViewAdapter.ViewHolder(view);
     }
 
@@ -57,18 +50,14 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.neighbourAvatar);
-
         holder.setNeighbour(neighbour);
+
+
     }
 
     @Override
     public int getItemCount() {
         return this.neighbours.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return this.neighbours.get(position).getId();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -92,8 +81,6 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageButton addToFavoritesButton;
         @BindView(R.id.item_list_remove_from_favorites_button)
         public ImageButton removeFromFavoritesButton;
-
-        private boolean isChecked;
 
         public ViewHolder(View view) {
             super(view);
