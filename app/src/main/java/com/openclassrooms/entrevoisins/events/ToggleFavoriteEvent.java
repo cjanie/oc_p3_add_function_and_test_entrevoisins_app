@@ -2,11 +2,11 @@ package com.openclassrooms.entrevoisins.events;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
-public class ToggleFavoritesEvent {
+public class ToggleFavoriteEvent {
 
     public Neighbour neighbour;
 
-    public ToggleFavoritesEvent(Neighbour neighbour) {
+    public ToggleFavoriteEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
     }
 

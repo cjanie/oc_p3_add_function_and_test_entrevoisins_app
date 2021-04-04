@@ -42,4 +42,10 @@ public class FavoriteFragment extends ListNeighbourFragment {
     protected void initList() {
         this.list = this.neighbourApiService.getFavorites();
     }
+
+    @Override
+    protected void initListView() {
+        this.initList(); // instantiate the list
+        this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
+    }
 }

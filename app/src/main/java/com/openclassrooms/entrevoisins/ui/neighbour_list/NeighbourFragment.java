@@ -41,4 +41,13 @@ public class NeighbourFragment extends ListNeighbourFragment {
     protected void initList() {
         this.list = this.neighbourApiService.getNeighbours();
     }
+
+    /**
+     * To set the view with related adapter
+     */
+    @Override
+    protected void initListView() {
+        this.initList(); // instantiate the list
+        this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
+    }
 }

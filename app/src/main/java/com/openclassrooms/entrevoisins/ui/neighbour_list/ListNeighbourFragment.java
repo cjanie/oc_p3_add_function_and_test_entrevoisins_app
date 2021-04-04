@@ -15,6 +15,7 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
+import com.openclassrooms.entrevoisins.events.ToggleFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -51,10 +52,8 @@ public abstract class ListNeighbourFragment extends Fragment {
      * Also called to refresh the view after events have affected the API
      *
      */
-    private void initListView() {
-        this.initList(); // instantiate the list
-        this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
-    }
+
+    protected abstract void initListView();
 
     @Override
     public void onResume() {
@@ -91,8 +90,9 @@ public abstract class ListNeighbourFragment extends Fragment {
     }
 
     @Subscribe
-    public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) { // TODO Test
+    public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) {
         neighbourApiService.removeFromFavorites(event.neighbour);
         this.initListView(); // to refresh the view after removing
     }
+
 }

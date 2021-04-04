@@ -1,27 +1,29 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
-import com.openclassrooms.entrevoisins.events.ToggleFavoritesEvent;
+import com.openclassrooms.entrevoisins.events.ToggleFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,11 +40,13 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         this.neighbours = items;
     }
 
+
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_neighbour, parent, false);
-        return new ViewHolder(view);
+                .inflate(R.layout.fragment_neighbour, parent, false); // TODO fragment_favorite
+        return new ListNeighbourRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
@@ -88,22 +92,16 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageButton addToFavoritesButton;
         @BindView(R.id.item_list_remove_from_favorites_button)
         public ImageButton removeFromFavoritesButton;
-        @BindView(R.id.item_list_toggle_favorites_button)
-        public ImageButton toggleFavoritesButton;
+
+        private boolean isChecked;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view); // to instantiate the views
             this.viewDetailButton.setOnClickListener(this);
             this.deleteButton.setOnClickListener(this);
-            this.toggleFavoritesButton.setOnClickListener(this);
             this.addToFavoritesButton.setOnClickListener(this);
             this.removeFromFavoritesButton.setOnClickListener(this);
-
-        }
-
-        private void toggleFavoritesSelection() { //TODO
-            this.toggleFavoritesButton.setActivated(!this.toggleFavoritesButton.isActivated());
         }
 
         /**
@@ -122,18 +120,11 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 view.getContext().startActivity(intent);
             } else if(view.equals(this.deleteButton)) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(this.neighbour));
-            } else if(view.equals(this.toggleFavoritesButton)) {
-                // TODO
             } else if(view.equals((this.addToFavoritesButton))) {
                 EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
             } else if(view.equals(this.removeFromFavoritesButton)) {
                 EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
             }
         }
-
     }
-
-    // https://stackoverflow.com/questions/27559021/recyclerview-onlistitemclick-to-create-new-intent
-
-
 }

@@ -23,14 +23,14 @@ public class FavoriteNeighbourHandler implements FavoriteHandler {
 
     @Override
     public void addToFavorites(Favorite favorite) {
-        if(!this.favorites.contains(favorite)) {
+        if (!this.favorites.contains(favorite)) {
             this.favorites.add((Neighbour) favorite);
         }
     }
 
     @Override
     public void removeFromFavorites(Favorite favorite) {
-        if(this.favorites.contains(favorite)) {
+        if (this.favorites.contains(favorite)) {
             this.favorites.remove(favorite);
         }
     }
@@ -39,4 +39,6 @@ public class FavoriteNeighbourHandler implements FavoriteHandler {
     public List<Favorite> getFavorites() {
         return new ArrayList<Favorite>(this.favorites);
     }
+
+
 }
