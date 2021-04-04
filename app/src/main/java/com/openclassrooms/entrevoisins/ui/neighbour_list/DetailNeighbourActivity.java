@@ -75,10 +75,10 @@ public class DetailNeighbourActivity extends AppCompatActivity implements Compou
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if(!isChecked) {
-            neighbourApiService.removeFromFavorites(neighbour);
-        } else {
+        if(isChecked) {
             neighbourApiService.addToFavorites(neighbour);
+        } else {
+            neighbourApiService.removeFromFavorites(neighbour);
         }
     }
 }

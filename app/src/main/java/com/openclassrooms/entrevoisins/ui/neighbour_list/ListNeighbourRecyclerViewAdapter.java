@@ -6,13 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
@@ -51,8 +54,15 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.neighbourAvatar);
         holder.setNeighbour(neighbour);
+        this.initFavoriteToggle(holder, neighbour);
+    }
 
-
+    private void initFavoriteToggle(ViewHolder holder, Neighbour neighbour) {
+        if(DI.getNeighbourApiService().getFavorites().contains(neighbour)) {
+            holder.switchFavoriteToggle.setChecked(true);
+        } else {
+            holder.switchFavoriteToggle.setChecked(false);
+        }
     }
 
     @Override
@@ -60,7 +70,7 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         return this.neighbours.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
         /**
          * One neighbour from the list of the recycler view adapter
@@ -81,6 +91,8 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageButton addToFavoritesButton;
         @BindView(R.id.item_list_remove_from_favorites_button)
         public ImageButton removeFromFavoritesButton;
+        @BindView(R.id.item_list_switch_favorite_toggle)
+        public Switch switchFavoriteToggle;
 
         public ViewHolder(View view) {
             super(view);
@@ -89,7 +101,10 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
             this.deleteButton.setOnClickListener(this);
             this.addToFavoritesButton.setOnClickListener(this);
             this.removeFromFavoritesButton.setOnClickListener(this);
+            this.switchFavoriteToggle.setOnCheckedChangeListener(this);
         }
+
+
 
         /**
          * Setter for neighbour
@@ -111,6 +126,17 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
             } else if(view.equals(this.removeFromFavoritesButton)) {
                 EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
+            }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            if(compoundButton.equals(this.switchFavoriteToggle)) {
+                if(isChecked) {
+                    EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
+                } else {
+                    EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
+                }
             }
         }
     }
