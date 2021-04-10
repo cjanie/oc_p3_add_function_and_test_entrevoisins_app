@@ -1,21 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
-import com.openclassrooms.entrevoisins.events.ToggleFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -33,7 +22,7 @@ public abstract class ListNeighbourFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        neighbourApiService = DI.getNeighbourApiService();
+        this.neighbourApiService = DI.getNeighbourApiService();
     }
 
     /**
@@ -49,8 +38,12 @@ public abstract class ListNeighbourFragment extends Fragment {
      * Also called to refresh the view after events have affected the API
      *
      */
-
-    protected abstract void initListView();
+    protected void initListView() {
+        this.initList(); // instantiate the list
+        if(this.list != null) {
+            this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
+        }
+    }
 
     @Override
     public void onResume() {
@@ -78,18 +71,6 @@ public abstract class ListNeighbourFragment extends Fragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         neighbourApiService.deleteNeighbour(event.neighbour);
         this.initListView(); // to refresh the view after deleting
-    }
-
-    @Subscribe
-    public void onAddNeighbourToFavorites(AddNeighbourToFavoritesEvent event) {
-        neighbourApiService.addToFavorites(event.neighbour);
-        this.initListView(); // to refresh the view after adding
-    }
-
-    @Subscribe
-    public void onRemoveNeighbourFromFavorites(RemoveNeighbourFromFavoritesEvent event) {
-        neighbourApiService.removeFromFavorites(event.neighbour);
-        this.initListView(); // to refresh the view after removing
     }
 
 }

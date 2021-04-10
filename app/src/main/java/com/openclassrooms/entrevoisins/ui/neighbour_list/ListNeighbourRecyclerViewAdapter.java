@@ -15,10 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.AddNeighbourToFavoritesEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.RemoveNeighbourFromFavoritesEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,7 +38,7 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_neighbour_list_item, parent, false); // TODO fragment_favorite
+                .inflate(R.layout.fragment_neighbour_list_item, parent, false);
         return new ListNeighbourRecyclerViewAdapter.ViewHolder(view);
     }
 
@@ -54,15 +51,6 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.neighbourAvatar);
         holder.setNeighbour(neighbour);
-        this.initFavoriteToggle(holder, neighbour);
-    }
-
-    private void initFavoriteToggle(ViewHolder holder, Neighbour neighbour) {
-        if(DI.getNeighbourApiService().getFavorites().contains(neighbour)) {
-            holder.switchFavoriteToggle.setChecked(true);
-        } else {
-            holder.switchFavoriteToggle.setChecked(false);
-        }
     }
 
     @Override
@@ -70,7 +58,7 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         return this.neighbours.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         /**
          * One neighbour from the list of the recycler view adapter
@@ -83,28 +71,24 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         public ImageView neighbourAvatar;
         @BindView(R.id.item_list_name)
         public TextView neighbourName;
-        @BindView(R.id.item_list_view_detail_button)
-        public ImageButton viewDetailButton;
         @BindView(R.id.item_list_delete_button)
         public ImageButton deleteButton;
-        @BindView(R.id.item_list_add_to_favorites_button)
-        public ImageButton addToFavoritesButton;
-        @BindView(R.id.item_list_remove_from_favorites_button)
-        public ImageButton removeFromFavoritesButton;
-        @BindView(R.id.item_list_switch_favorite_toggle)
-        public Switch switchFavoriteToggle;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view); // to instantiate the views
-            this.viewDetailButton.setOnClickListener(this);
+            this.neighbourAvatar.setOnClickListener(this);
+            this.neighbourName.setOnClickListener(this);
             this.deleteButton.setOnClickListener(this);
-            this.addToFavoritesButton.setOnClickListener(this);
-            this.removeFromFavoritesButton.setOnClickListener(this);
-            this.switchFavoriteToggle.setOnCheckedChangeListener(this);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
+                    intent.putExtra("id", neighbour.getId());
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
-
-
 
         /**
          * Setter for neighbour
@@ -114,30 +98,17 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
             this.neighbour = neighbour;
         }
 
+
         @Override
         public void onClick(View view) {
-            if(view.equals(this.viewDetailButton)) {
+            if(view.equals(this.neighbourAvatar) || view.equals(this.neighbourName)) {
                 Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
                 intent.putExtra("id", this.neighbour.getId());
                 view.getContext().startActivity(intent);
             } else if(view.equals(this.deleteButton)) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(this.neighbour));
-            } else if(view.equals((this.addToFavoritesButton))) {
-                EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
-            } else if(view.equals(this.removeFromFavoritesButton)) {
-                EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
             }
         }
 
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-            if(compoundButton.equals(this.switchFavoriteToggle)) {
-                if(isChecked) {
-                    EventBus.getDefault().post(new AddNeighbourToFavoritesEvent(this.neighbour));
-                } else {
-                    EventBus.getDefault().post(new RemoveNeighbourFromFavoritesEvent(this.neighbour));
-                }
-            }
-        }
     }
 }

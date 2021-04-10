@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.service.FavoriteNeighbourHandler;
+
 
 public class FavoriteFragment extends ListNeighbourFragment {
 
@@ -18,6 +19,7 @@ public class FavoriteFragment extends ListNeighbourFragment {
      * Create and return a new instance
      * @return @{@link FavoriteFragment}
      */
+
     public static FavoriteFragment newInstance() {
         FavoriteFragment fragment = new FavoriteFragment();
         return fragment;
@@ -26,7 +28,7 @@ public class FavoriteFragment extends ListNeighbourFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorite_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         this.recyclerView = (RecyclerView) view;
         this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -35,17 +37,13 @@ public class FavoriteFragment extends ListNeighbourFragment {
     }
 
     /**
-     * Instantiate the list of favorites from API
+     * Instantiate the list
      *
      */
     @Override
     protected void initList() {
-        this.list = this.neighbourApiService.getFavorites();
+        this.list = FavoriteNeighbourHandler.getInstance().getFavoriteNeighbours();
     }
 
-    @Override
-    protected void initListView() {
-        this.initList(); // instantiate the list
-        this.recyclerView.setAdapter(new ListFavoriteRecyclerViewAdapter(this.list));
-    }
+
 }

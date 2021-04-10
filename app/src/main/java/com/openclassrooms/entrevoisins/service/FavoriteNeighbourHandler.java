@@ -1,43 +1,37 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteNeighbourHandler implements FavoriteHandler {
+public class FavoriteNeighbourHandler extends FavoriteHandlerImpl {
 
-    private List<Neighbour> favorites;
+    private static FavoriteNeighbourHandler INSTANCE;
 
-    public FavoriteNeighbourHandler() {
-        this.resetFavoriteList();
+    private FavoriteNeighbourHandler() {
     }
 
-    /**
-     * Method to instantiate the list
-     */
-    @Override
-    public void resetFavoriteList() {
-        this.favorites = new ArrayList<>();
-    }
-
-    @Override
-    public void addToFavorites(Favorite favorite) {
-        if (!this.favorites.contains(favorite)) {
-            this.favorites.add((Neighbour) favorite);
+    public static FavoriteNeighbourHandler getInstance() {
+        if(FavoriteNeighbourHandler.INSTANCE == null) {
+            FavoriteNeighbourHandler.INSTANCE = new FavoriteNeighbourHandler();
         }
+        return FavoriteNeighbourHandler.INSTANCE;
     }
 
-    @Override
-    public void removeFromFavorites(Favorite favorite) {
-        if (this.favorites.contains(favorite)) {
-            this.favorites.remove(favorite);
+    public List<Neighbour> getFavoriteNeighbours() {
+        List<Neighbour> favoriteNeighbours = new ArrayList<>();
+        if(this.favorites != null) {
+            for(int i=0; i<favorites.size(); i++) {
+                if(favorites.get(i) instanceof Neighbour) {
+                    favoriteNeighbours.add((Neighbour) favorites.get(i));
+                }
+            }
         }
-    }
-
-    @Override
-    public List<Favorite> getFavorites() {
-        return new ArrayList<Favorite>(this.favorites);
+        return favoriteNeighbours;
     }
 
 

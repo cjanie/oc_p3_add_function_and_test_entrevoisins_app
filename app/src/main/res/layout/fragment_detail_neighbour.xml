@@ -7,28 +7,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <ImageView
+        android:id="@+id/detail_neighbour_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/detail_neighbour_button_back"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/detail_neighbour_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="@dimen/text_big_size"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/detail_neighbour"
+        app:layout_constraintBottom_toBottomOf="@+id/detail_neighbour_image"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <Switch
-        android:id="@+id/detail_neighbour_switch_favorite_toggle"
+    <ImageView
+        android:id="@+id/detail_neighbour_favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
-        android:switchMinWidth="56dp"
-        android:text="Favorite"
-        android:textOff="OFF"
-        android:textOn="ON"
-        app:layout_constraintBottom_toBottomOf="@+id/detail_neighbour_name"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:src="@drawable/ic_star_24dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_neighbour_image"/>
+
+
 </android.support.constraint.ConstraintLayout>
