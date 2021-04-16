@@ -22,7 +22,7 @@ public class AddToFavoritesViewAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
-        View button = view.findViewById(R.id.item_list_add_to_favorites_button);
+        View button = view.findViewById(R.id.detail_neighbour_favorite_button);
         // Maybe check for null
         button.performClick();
     }

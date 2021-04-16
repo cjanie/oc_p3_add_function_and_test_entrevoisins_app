@@ -10,14 +10,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -27,9 +23,17 @@ public class NeighbourServiceTest {
 
     private NeighbourApiService service;
 
+    private FavoriteHandler favoriteHandler; // Needed to test delete neighbour since a deleted neighbour should be removed from the favorites list
+
+    // To test delete neighbour at index 0
+    private Neighbour neighbourAtIndex0;
+
     @Before
     public void setup() {
         this.service = DI.getNewInstanceApiService();
+        this.favoriteHandler = FavoriteNeighbourHandler.getInstance();
+        this.neighbourAtIndex0 = this.service.getNeighbours().get(0);
+        this.favoriteHandler.addToFavorites(neighbourAtIndex0); // the neighbour is in the list of favorites
     }
 
     @Test
@@ -41,48 +45,14 @@ public class NeighbourServiceTest {
 
     @Test
     public void deleteNeighbourWithSuccess() {
-        Neighbour neighbourToDelete = service.getNeighbours().get(0);
-        service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours().contains(neighbourToDelete));
-        //assertFalse(service.getFavorites().contains(neighbourToDelete));
+        service.deleteNeighbour(this.neighbourAtIndex0); // When the neighbour is deleted,
+        assertFalse(service.getNeighbours().contains(this.neighbourAtIndex0)); // check that it is removed from the list of neighbours
+        assertFalse(favoriteHandler.getFavorites().contains(this.neighbourAtIndex0)); // check that it is removed from the list of favorites
     }
 
     @Test
     public void getNeighbourByIdWithSuccess() {
         Neighbour neighbourToGet = service.getNeighbours().get(0);
-        service.getNeighbourById(neighbourToGet.getId());
-        assert(service.getNeighbourById(neighbourToGet.getId()).equals(neighbourToGet));
+        assert(service.getNeighbourById(1).equals(neighbourToGet));
     }
-/*
-    @Test
-    public void GetFavoritesWithSuccess() {
-        List<Neighbour> favorites = service.getFavorites();
-        assertNotNull(favorites);
-        assertTrue(favorites.isEmpty());
-        Neighbour neighbour = service.getNeighbours().get(0);
-
-        // Test add to favorites
-        service.addToFavorites(neighbour);
-        favorites = service.getFavorites();
-        assert(favorites.contains(neighbour));
-        assertEquals(1, favorites.size());
-
-        // If neighbour is already in the list of favorites, it has not be added again
-        service.addToFavorites(neighbour);
-        favorites = service.getFavorites();
-        assertEquals(1, favorites.size());
-
-        // Check data of added favorite
-        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getAvatarUrl).collect(Collectors.toList()).contains(neighbour.getAvatarUrl()));
-        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getId).collect(Collectors.toList()).contains(neighbour.getId()));
-        assertTrue(DUMMY_NEIGHBOURS.stream().map(Neighbour::getName).collect(Collectors.toList()).contains(neighbour.getName()));
-
-        // Test remove from favorites
-        service.removeFromFavorites(neighbour);
-        favorites = service.getFavorites();
-        assertFalse(favorites.contains(neighbour));
-        assert(favorites.isEmpty());
-    }
-
- */
 }

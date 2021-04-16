@@ -10,7 +10,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.AddToFavoritesViewAction;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
-import com.openclassrooms.entrevoisins.utils.RemoveFromFavoritesViewAction;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,20 +40,20 @@ public class NeighboursListTest {
     private ListNeighbourActivity listNeighbourActivity;
 
     @Rule
-    public ActivityTestRule<ListNeighbourActivity> mActivityRule =
+    public ActivityTestRule<ListNeighbourActivity> listNeighbourActivityTestRule =
             new ActivityTestRule(ListNeighbourActivity.class);
 
     @Before
     public void setUp() {
-        listNeighbourActivity = mActivityRule.getActivity();
-        assertThat(listNeighbourActivity, notNullValue());
+        this.listNeighbourActivity = listNeighbourActivityTestRule.getActivity();
+        assertThat(this.listNeighbourActivity, notNullValue());
     }
 
     /**
      * We ensure that our recyclerview is displaying at least one item
      */
     @Test
-    public void myNeighboursList_shouldNotBeEmpty() {
+    public void myNeighboursListShouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .check(matches(hasMinimumChildCount(1)));
@@ -64,8 +63,7 @@ public class NeighboursListTest {
      * When we delete an item, the item is no more shown
      */
     @Test
-    public void myNeighboursList_deleteAction_shouldRemoveItem() {
-        // Given : We remove the element at position 2
+    public void myNeighboursListDeleteActionShouldRemoveItem() {
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
@@ -75,36 +73,20 @@ public class NeighboursListTest {
     }
 
     @Test
-    public void favoritesList_shouldNotBeNull() {
-        onView(ViewMatchers.withId(R.id.list_favorites))
+    public void favoritesListShouldNotBeNull() {
+        onView(ViewMatchers.withId(R.id.list_neighbours))
                 .check(matches(hasMinimumChildCount(0)));
     }
 
     @Test
-    public void favoriteList_addAction_shouldAddItem() {
+    public void favoriteListAddActionShouldAddItem() {
         // Given : We add to favorites the element at position 2
-        onView(ViewMatchers.withId(R.id.list_favorites)).check(withItemCount(favoritesCount));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(favoritesCount));
         // When perform a click on a add to favorites icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new AddToFavoritesViewAction()));
         // Then : the number of elements is 1
-        onView(ViewMatchers.withId(R.id.list_favorites)).check(withItemCount(favoritesCount + 1));
-    }
-
-    @Test
-    public void favoriteList_removeAction_shouldRemoveItem() {
-        // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_favorites)).check(withItemCount(favoritesCount));
-        // When perform a click on a remove from favorite icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new RemoveFromFavoritesViewAction()));
-        // Then : the number of element is 1 less
-        if(favoritesCount > 0) {
-            favoritesCount -= 1;
-        } else {
-            favoritesCount = 0;
-        }
-        onView(ViewMatchers.withId(R.id.list_favorites)).check(withItemCount(favoritesCount));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(favoritesCount + 1));
     }
 
 

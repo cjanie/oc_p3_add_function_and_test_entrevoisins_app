@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detail_neighbour"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
 
     <ImageView
         android:id="@+id/detail_neighbour_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.40"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/detail_neighbour_button_back"
-        android:src="@drawable/ic_baseline_arrow_back_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/big_margin"
+        android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/detail_neighbour_name"
@@ -33,22 +36,37 @@
         android:layout_marginBottom="@dimen/big_margin"
         android:textColor="@color/cardview_light_background"
         android:textSize="@dimen/text_big_size"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/detail_neighbour_image"
+        app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/detail_neighbour_favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_24dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:src="@drawable/toggle_favorite"
+        android:backgroundTint="@color/cardview_light_background"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_neighbour_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/detail_neighbour_name" />
+
+    <fragment
+        android:id="@+id/info_neighbour_fragment"
+        android:name="com.openclassrooms.entrevoisins.ui.neighbour_list.InfoNeighbourFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/detail_neighbour_image" />
+
+    <fragment
+        android:id="@+id/about_me_neighbour_fragment"
+        android:name="com.openclassrooms.entrevoisins.ui.neighbour_list.AboutMeNeighbourFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/info_neighbour_fragment" />
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

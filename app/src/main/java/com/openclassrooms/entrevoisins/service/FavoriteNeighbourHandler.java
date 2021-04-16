@@ -1,8 +1,5 @@
 package com.openclassrooms.entrevoisins.service;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;

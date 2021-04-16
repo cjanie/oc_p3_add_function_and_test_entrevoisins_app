@@ -36,7 +36,7 @@ public class NeighbourDetailTest {
     }
 
     @Test
-    public void neighbourName_shouldNotBeNull() {
+    public void neighbourNameShouldNotBeNull() {
         onView(ViewMatchers.withId(R.id.detail_neighbour_name))
                 .check(matches(notNullValue()));
     }
