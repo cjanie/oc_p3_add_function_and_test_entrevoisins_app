@@ -1,6 +1,8 @@
 
 package com.openclassrooms.entrevoisins.neighbour_list;
 
+import android.view.View;
+
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -13,9 +15,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.service.FavoriteNeighbourHandler;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
-import com.openclassrooms.entrevoisins.utils.AddToFavoritesViewAction;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
+import com.openclassrooms.entrevoisins.utils.ShowDetailViewAction;
+import com.openclassrooms.entrevoisins.utils.ToggleFavoriteViewAction;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,6 +29,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -62,7 +67,7 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursListShouldNotBeEmpty() {
+    public void neighboursListShouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .check(matches(hasMinimumChildCount(1)));
@@ -72,7 +77,7 @@ public class NeighboursListTest {
      * When we delete an item, the item is no more shown
      */
     @Test
-    public void myNeighboursListDeleteActionShouldRemoveItem() {
+    public void neighboursListDeleteActionShouldRemoveItem() {
         onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
@@ -81,23 +86,45 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT - 1));
     }
 
-    /*
+    /**
+     * Test the detail activity launching
+     * https://zestedesavoir.com/tutoriels/272/introduction-aux-tests-android-avec-espresso/
+     */
+
+    @Test
+    public void neighboursListShowDetailActionShouldLaunchDetailActivity() {
+        // Perform click on neighbour at position 0
+        onView(ViewMatchers.withId(R.id.list_neighbours))
+               .perform(RecyclerViewActions.actionOnItemAtPosition(0, new ShowDetailViewAction()));
+        // Suppose to be on detail activity
+        onView(ViewMatchers.withId(R.id.detail_neighbour)).check(matches(notNullValue()));
+    }
+
+    @Test
+    public void neighboursListShowDetailActionShouldLaunchDetailActivityWithNeighbourName() {
+        // Perform click on neighbour at position 0 (Caroline)
+        onView(ViewMatchers.withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new ShowDetailViewAction()));
+        // Detail activity should show neighbour name
+        onView(ViewMatchers.withId(R.id.detail_neighbour_name)).check(matches(withText("Caroline")));
+    }
+
+
+    /**
+     * Test list of favorites
+     */
     @Test
     public void favoritesListShouldNotBeNull() {
         onView(ViewMatchers.withId(R.id.list_favorites))
-                .check(matches(hasMinimumChildCount(0)));
+                .check(matches(notNullValue()));
     }
 
     @Test
-    public void favoriteListAddActionShouldAddItem() {
-        // Given : We add to favorites the element at position 2
-        onView(ViewMatchers.withId(R.id.list_favorites)).check((ViewAssertion) withItemCount(favoritesCount));
-        // When perform a click on a add to favorites icon
-        onView(ViewMatchers.withId(R.id.list_favorites))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new AddToFavoritesViewAction()));
-        // Then : the number of elements is 1
-        onView(ViewMatchers.withId(R.id.list_favorites)).check((ViewAssertion) withItemCount(favoritesCount + 1));
+    public void favoritesListIsInitiallyEmpty() {
+        onView(ViewMatchers.withId(R.id.list_favorites)).check(matches(hasMinimumChildCount(0)));
     }
 
-*/
+
+
+
 }

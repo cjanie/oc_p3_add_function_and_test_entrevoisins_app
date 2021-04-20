@@ -9,8 +9,7 @@ import com.openclassrooms.entrevoisins.R;
 
 import org.hamcrest.Matcher;
 
-public class AddToFavoritesViewAction implements ViewAction {
-
+public class ShowDetailViewAction implements ViewAction {
     @Override
     public Matcher<View> getConstraints() {
         return null;
@@ -18,13 +17,12 @@ public class AddToFavoritesViewAction implements ViewAction {
 
     @Override
     public String getDescription() {
-        return "Click on toggle favorite button";
+        return "Click on neighbour item";
     }
 
     @Override
     public void perform(UiController uiController, View view) {
-        View button = view.findViewById(R.id.detail_neighbour_favorite_button);
-        // Maybe check for null
-        button.performClick();
+        View textView = view.findViewById(R.id.item_list_name);
+        textView.performClick();
     }
 }
