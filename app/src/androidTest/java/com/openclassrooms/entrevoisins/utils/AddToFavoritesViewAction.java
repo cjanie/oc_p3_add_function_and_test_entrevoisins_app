@@ -1,8 +1,9 @@
 package com.openclassrooms.entrevoisins.utils;
 
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
 import android.view.View;
+
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 
 import com.openclassrooms.entrevoisins.R;
 
@@ -17,7 +18,7 @@ public class AddToFavoritesViewAction implements ViewAction {
 
     @Override
     public String getDescription() {
-        return "Click on specific button";
+        return "Click on toggle favorite button";
     }
 
     @Override

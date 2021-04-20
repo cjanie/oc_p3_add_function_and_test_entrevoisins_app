@@ -1,22 +1,23 @@
 package com.openclassrooms.entrevoisins.neighbour_list;
 
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.DetailNeighbourActivity;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static org.hamcrest.core.IsNull.notNullValue;
-
-import static android.support.test.espresso.Espresso.onView;
 
 /**
  * Test class for neighbour item
@@ -24,15 +25,15 @@ import static android.support.test.espresso.Espresso.onView;
 @RunWith(AndroidJUnit4.class)
 public class NeighbourDetailTest {
 
-    private DetailNeighbourActivity detailNeighbourActivity;
+    private ActivityScenario<DetailNeighbourActivity> detailNeighbourActivity;
 
     @Rule
-    public ActivityTestRule<DetailNeighbourActivity> detailNeighbourActivityRule = new ActivityTestRule(DetailNeighbourActivity.class);
+    public ActivityScenarioRule<DetailNeighbourActivity> detailNeighbourActivityRule = new ActivityScenarioRule(DetailNeighbourActivity.class);
 
     @Before
     public void setUp() {
-        detailNeighbourActivity = detailNeighbourActivityRule.getActivity();
-        assertThat(detailNeighbourActivity, notNullValue());
+        detailNeighbourActivity = detailNeighbourActivityRule.getScenario();
+        Assert.assertThat(detailNeighbourActivity, notNullValue());
     }
 
     @Test
