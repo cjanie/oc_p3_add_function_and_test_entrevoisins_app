@@ -59,6 +59,7 @@ public abstract class ListNeighbourFragment extends Fragment {
      * Also called to refresh the view after events have affected the API
      */
     protected void initListView() {
+        this.initList(); // instantiate this.list
         if(this.list != null) {
             this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
         }
@@ -68,7 +69,6 @@ public abstract class ListNeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.neighbourApiService = DI.getNeighbourApiService();
-        this.initList(); // instantiate this.list
         this.initLayout(); // to define this.layout to inflate
     }
 

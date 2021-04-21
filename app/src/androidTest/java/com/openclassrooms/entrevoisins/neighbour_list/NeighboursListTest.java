@@ -13,11 +13,12 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.FavoriteNeighbourHandler;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 import com.openclassrooms.entrevoisins.utils.ShowDetailViewAction;
-import com.openclassrooms.entrevoisins.utils.ToggleFavoriteViewAction;
 
 import org.hamcrest.Matcher;
 import org.junit.Assert;
@@ -28,6 +29,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
@@ -122,6 +124,18 @@ public class NeighboursListTest {
     @Test
     public void favoritesListIsInitiallyEmpty() {
         onView(ViewMatchers.withId(R.id.list_favorites)).check(matches(hasMinimumChildCount(0)));
+    }
+
+    private void addFavorite() {
+        Neighbour neighbour = DI.getNeighbourApiService().getNeighbourById(1);
+        FavoriteNeighbourHandler.getInstance().addToFavorites(neighbour);
+    }
+
+    @Test
+    public void favoritesListShouldContainOnlyFavorites() {
+        this.addFavorite();
+        onView(ViewMatchers.withId(R.id.list_favorites)).check(matches(hasMinimumChildCount(1)));
+// TODO
     }
 
 

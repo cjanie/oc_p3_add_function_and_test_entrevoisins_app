@@ -45,12 +45,11 @@
         android:id="@+id/detail_neighbour_favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:src="@drawable/toggle_favorite"
+        android:layout_marginRight="@dimen/text_margin"
         android:backgroundTint="@color/cardview_light_background"
+        android:src="@drawable/toggle_favorite"
+        app:borderWidth="0.0dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_neighbour_name" />
 
