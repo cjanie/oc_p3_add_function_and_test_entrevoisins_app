@@ -57,6 +57,11 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
         return this.neighbours.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return this.neighbours.get(position).getId();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         /**

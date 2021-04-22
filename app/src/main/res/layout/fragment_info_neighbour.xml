@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,31 +9,36 @@
         android:id="@+id/card_info_neighbour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_small_margin"
         app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/card_elevation">
+        app:cardElevation="@dimen/card_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/info_neighbour_name"
-                android:text="name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:paddingBottom="@dimen/small_padding_bottom"
+                android:text="name"
                 android:textSize="@dimen/text_big_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/divider_width"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="@id/info_neighbour_name" />
 
@@ -42,18 +46,17 @@
                 android:id="@+id/icon_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_location_on_24"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_baseline_location_on_24"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/info_neighbour_address"/>
+                app:layout_constraintTop_toTopOf="@id/info_neighbour_address" />
 
             <TextView
                 android:id="@+id/info_neighbour_address"
-                android:text="address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:paddingBottom="@dimen/small_padding_bottom"
+                android:text="address"
                 app:layout_constraintStart_toEndOf="@id/icon_address"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -61,28 +64,26 @@
                 android:id="@+id/icon_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_local_phone_24"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_baseline_local_phone_24"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/info_neighbour_phone_number" />
 
             <TextView
                 android:id="@+id/info_neighbour_phone_number"
-                android:text="phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:paddingBottom="@dimen/small_padding_bottom"
+                android:text="phone"
                 app:layout_constraintStart_toEndOf="@id/icon_phone"
-                app:layout_constraintTop_toBottomOf="@+id/info_neighbour_address"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/info_neighbour_address" />
 
             <ImageView
                 android:id="@+id/icon_web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_language_24"
                 android:layout_marginStart="16dp"
+                android:src="@drawable/ic_baseline_language_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/info_neighbour_website" />
 
@@ -91,10 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:paddingBottom="@dimen/small_padding_bottom"
+                android:paddingBottom="@dimen/text_margin"
                 android:text="website"
                 app:layout_constraintStart_toEndOf="@+id/icon_web"
-                app:layout_constraintTop_toBottomOf="@id/info_neighbour_phone_number"/>
+                app:layout_constraintTop_toBottomOf="@id/info_neighbour_phone_number" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

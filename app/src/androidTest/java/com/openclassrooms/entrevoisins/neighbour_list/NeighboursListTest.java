@@ -48,9 +48,6 @@ public class NeighboursListTest {
     // This is fixed
     private static int ITEMS_COUNT = 12;
 
-    // This is not fixed
-    private int favoritesCount = -1;
-
     private ActivityScenario<ListNeighbourActivity> listNeighbourActivity;
 
     @Rule
@@ -61,7 +58,6 @@ public class NeighboursListTest {
     public void setUp() {
         this.listNeighbourActivity = listNeighbourActivityScenarioRule.getScenario();
         Assert.assertThat(this.listNeighbourActivity, notNullValue());
-        this.favoritesCount = FavoriteNeighbourHandler.getInstance().getFavoriteNeighbours().size();
     }
 
     /**
@@ -135,7 +131,8 @@ public class NeighboursListTest {
     public void favoritesListShouldContainOnlyFavorites() {
         this.addFavorite();
         onView(ViewMatchers.withId(R.id.list_favorites)).check(matches(hasMinimumChildCount(1)));
-// TODO
+        // TODO
+
     }
 
 
