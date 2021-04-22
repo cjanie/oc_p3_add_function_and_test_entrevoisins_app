@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detail_neighbour"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_small_margin">
 
 
         <ImageView
@@ -18,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
+            android:paddingBottom="@dimen/activity_vertical_small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.40"
             app:layout_constraintStart_toStartOf="parent"
