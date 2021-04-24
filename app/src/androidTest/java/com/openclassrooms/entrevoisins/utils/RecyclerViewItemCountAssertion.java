@@ -28,7 +28,7 @@ public class RecyclerViewItemCountAssertion implements ViewAssertion {
 
         @Override
         public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (noViewFoundException != null) {
+            if(noViewFoundException != null) {
                 throw noViewFoundException;
             }
 
