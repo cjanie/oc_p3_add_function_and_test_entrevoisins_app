@@ -1,37 +1,46 @@
----- Add a functionality ----
-
 At initial state, unit tests and instrumented tests succeed.
-Users would like to see the detail of the other users and to add other users to their favorites.
-# Issue 1: to make a new page to see the detail of a user
-# Issue 2: to handle favorites
-
----- Technical info for developers ----
 
 # UX
+
 Initial state:
-- As a user I can get the list of the users
+- As a user (neighbour) I can get the list of the users (neighbours)
 - As a user I can delete a user
 - As a user I can add a user
+
 Issues:
-- As a user I can get the detail of a user on a new page
-- As a user I can add users to my favorites
+- As a user I can view the detail of a user on a new page
+- As a user I can add the user to my favorites
 
-# Technical Specifications
-In ListFragment each Item is associated to a 'delete' button. Added: 'view detail' and 'add to favorites' buttons.
-Buttons are implemented in RecyclerView:
-- on click 'view detail' button to navigate to the 'detail' page
-- on click 'add to favorites button' to send an event by EventBus such as the 'delete' button does
+# View Detail Issue
+The list of neighbours view is handled by RecyclerView.Adapter, each item view is handled in the ViewHolder of the adapter.
+For each item view, the 'delete' button is implemented in the ViewHolder.
+The same for the new functionnality view Detail, on click on the item; it uses an intent to navigate to the detail page (activity), that carries the id of the item for the detail page
+to call api with a getById method.
 
-Architecture CQRS to use API: GET for query from API / EventBus for command to API
-- GET to initialize data in UI: get list in ListFragment / get item by id in DetailActivity
-- to command to API pressing a button sending a related event by EventBus
+The detail activity consists in a ScrollView. Within: a ConstraintLayout that contains:
+- the picture of the user at 40% of the screen
+- the back icon button, with an intent to the list page
+- CardViews with ConstraintLayout, Radius, Elevation
 
-EventBus pattern
-The Fragment subscribe to receive events sent by EventBus when buttons are pressed.
-Events transport data to the fragment for API command execution.
-At the receipt of an event, the fragment makes API execute the corresponding command.
-- the receipt of the DeleteEvent by the fragment involves API to execute the delete command
-- the receipt of the AddToFavoritesEvent by the fragment involves API to execute the add to favorites command
+# Handling Favorites Issue
 
-# Architecture and pattern Scheme
+In the detail page, there is a toogle to handle favorites; it is made of two images corresponding to the checked/uncheked status:
+depending of these checked/unchecked status, user is added to the favorites or removed from the favorites
+
+For the list of favorites, it is displayed in the List activity, as the list of neighbours, depending of a ViewPagerAdapter displaying the list of neighbours fragment or the list of favorites fragment.
+Both fragments, for both lists, are using the same RecyclerView.Adapter. So they can have the same parent fragment.
+The fragment methods (onCreateView...) are implemented in the parent fragment; the parent fragment has abstract method to initialize the correct list and the correct list layout, depending of the child fragments for neigbours or favorites
+
+# The api contains
+- a NeighbourService
+- a FavoriteHandler
+- a FavoriteInterface (Neighbour class implements FavoriteInterface)
+The service has a FavoriteHandler property that is needed in the delete implementation: when a neighbour is deleted, it has to be removed from the list of favorites.
 https://docs.google.com/presentation/d/1G5H_qggvZ4L6qLUZY3EXCFsJihgFf7dhPeA3GcwhN2M/edit#slide=id.gce3d97d3eb_0_82
+
+# Unit Tests
+- Test service
+- Test FavoriteHandler
+
+# Instrumented Tests
+- All views are tested from the main List Activity
