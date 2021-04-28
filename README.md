@@ -25,7 +25,7 @@ The detail activity consists in a ScrollView. Within: a ConstraintLayout that co
 # Handling Favorites Issue
 
 In the detail page, there is a toogle to handle favorites; it is made of two images corresponding to the checked/uncheked status:
-depending of these checked/unchecked status, user is added to the favorites or removed from the favorites
+depending of these checked/unchecked status, user is added to the favorites or removed from the favorites.
 
 For the list of favorites, it is displayed in the List activity, as the list of neighbours, depending of a ViewPagerAdapter displaying the list of neighbours fragment or the list of favorites fragment.
 Both fragments, for both lists, are using the same RecyclerView.Adapter. So they can have the same parent fragment.
