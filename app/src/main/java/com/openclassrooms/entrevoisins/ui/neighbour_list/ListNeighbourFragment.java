@@ -25,8 +25,6 @@ public abstract class ListNeighbourFragment extends Fragment {
 
     private NeighbourApiService neighbourApiService;
     private RecyclerView recyclerView;
-    protected int layout;
-    protected List<Neighbour> list;
 
     /**
      * Getter for API
@@ -40,17 +38,17 @@ public abstract class ListNeighbourFragment extends Fragment {
 
     /**
      * initLayout
-     * Abstract method to define this.layout to inflate in onCreateView
+     * Abstract method to define the layout to inflate in onCreateView
      * One layout for each Child fragment. Otherwise integrated tests are failing with an AmbiguousViewMatcherException:
      * androidx.test.espresso.AmbiguousViewMatcherException: 'with id is <com.openclassrooms.entrevoisins:id/list_neighbours>' matches multiple views in the hierarchy.
      */
-    protected abstract void initLayout();
+    protected abstract int initLayout();
 
     /**
      * initList
-     * Abstract method to instantiate this.list
+     * Abstract method to instantiate list for recycler view adapter
      */
-    protected abstract void initList();
+    protected abstract List<Neighbour> initList();
 
     /**
      * initListView
@@ -58,10 +56,10 @@ public abstract class ListNeighbourFragment extends Fragment {
      * Called in onResume
      * Also called to refresh the view after events have affected the API
      */
-    protected void initListView() {
-        this.initList(); // instantiate this.list
-        if(this.list != null) {
-            this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(this.list));
+    private void initListView() {
+        List<Neighbour> list = this.initList(); // instantiate list for recycler view adapter
+        if(list != null) {
+            this.recyclerView.setAdapter(new ListNeighbourRecyclerViewAdapter(list));
         }
     }
 
@@ -75,7 +73,7 @@ public abstract class ListNeighbourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(this.layout, container, false);
+        View view = inflater.inflate(this.initLayout(), container, false);
         Context context = view.getContext();
         this.recyclerView = (RecyclerView) view;
         this.recyclerView.setLayoutManager(new LinearLayoutManager(context));

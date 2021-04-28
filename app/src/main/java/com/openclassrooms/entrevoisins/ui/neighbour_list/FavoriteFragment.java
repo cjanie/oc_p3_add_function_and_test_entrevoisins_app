@@ -1,7 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.FavoriteNeighbourHandler;
+
+import java.util.List;
 
 
 public class FavoriteFragment extends ListNeighbourFragment {
@@ -19,15 +22,15 @@ public class FavoriteFragment extends ListNeighbourFragment {
      * To define the layout to inflate in onCreateView
      */
     @Override
-    protected void initLayout() {
-        this.layout = R.layout.fragment_favorite_list;
+    protected int initLayout() {
+        return R.layout.fragment_favorite_list;
     }
 
     /**
      * To instantiate the list from FavoriteNeighbourHandler
      */
     @Override
-    protected void initList() {
-        this.list = FavoriteNeighbourHandler.getInstance().getFavoriteNeighbours();
+    protected List<Neighbour> initList() {
+        return FavoriteNeighbourHandler.getInstance().getFavoriteNeighbours();
     }
 }

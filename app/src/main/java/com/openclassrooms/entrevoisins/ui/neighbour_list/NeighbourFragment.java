@@ -2,6 +2,9 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+
+import java.util.List;
 
 public class NeighbourFragment extends ListNeighbourFragment {
 
@@ -18,16 +21,16 @@ public class NeighbourFragment extends ListNeighbourFragment {
      * To define the layout to inflate in onCreateView
      */
     @Override
-    protected void initLayout() {
-        this.layout = R.layout.fragment_neighbour_list;
+    protected int initLayout() {
+        return R.layout.fragment_neighbour_list;
     }
 
     /**
      * Instantiate the list of neighbours from api
      */
     @Override
-    protected void initList() {
-        this.list = super.getNeighbourApiService().getNeighbours();
+    protected List<Neighbour> initList() {
+        return super.getNeighbourApiService().getNeighbours();
     }
 
 }
