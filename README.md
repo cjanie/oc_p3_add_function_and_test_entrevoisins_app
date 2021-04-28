@@ -35,8 +35,9 @@ The fragment methods (onCreateView...) are implemented in the parent fragment; t
 - a NeighbourService
 - a FavoriteHandler
 - a FavoriteInterface (Neighbour class implements FavoriteInterface)
+
 The service has a FavoriteHandler property that is needed in the delete implementation: when a neighbour is deleted, it has to be removed from the list of favorites.
-https://docs.google.com/presentation/d/1G5H_qggvZ4L6qLUZY3EXCFsJihgFf7dhPeA3GcwhN2M/edit#slide=id.gce3d97d3eb_0_82
+Api architecture schemes https://docs.google.com/presentation/d/1G5H_qggvZ4L6qLUZY3EXCFsJihgFf7dhPeA3GcwhN2M/edit#slide=id.gce3d97d3eb_0_82
 
 # Unit Tests
 - Test service
