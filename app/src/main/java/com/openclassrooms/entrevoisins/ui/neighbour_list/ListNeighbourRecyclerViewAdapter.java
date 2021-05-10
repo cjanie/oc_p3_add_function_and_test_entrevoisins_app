@@ -100,11 +100,7 @@ public class ListNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<ListN
 
         @Override
         public void onClick(View view) {
-            if(view.equals(this.neighbourAvatar) || view.equals(this.neighbourName)) {
-                Intent intent = new Intent(view.getContext(), DetailNeighbourActivity.class);
-                intent.putExtra("id", this.neighbour.getId());
-                view.getContext().startActivity(intent);
-            } else if(view.equals(this.deleteButton)) {
+            if(view.equals(this.deleteButton)) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(this.neighbour));
             }
         }
